@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hệ Thống Lấy Key</title>
+    <style>
+        /* Giao diện nền trắng, căn giữa màn hình */
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Khung chứa nội dung */
+        .container {
+            text-align: center;
+            padding: 30px;
+            border: 2px solid #eaeaea;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+            background: #ffffff;
+            max-width: 380px;
+            width: 90%;
+        }
+
+        h2 {
+            color: #222222;
+            margin-bottom: 20px;
+            font-size: 22px;
+        }
+
+        /* Khung hiển thị Key */
+        .key-box {
+            font-size: 22px;
+            font-weight: bold;
+            letter-spacing: 1px;
+            padding: 15px;
+            border: 2px dashed #0088cc;
+            background-color: #f5f9fc;
+            color: #0088cc;
+            margin-bottom: 25px;
+            border-radius: 8px;
+            word-break: break-all;
+        }
+
+        /* Nút bấm sao chép */
+        .btn-copy {
+            background-color: #0088cc;
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+            width: 100%;
+        }
+
+        .btn-copy:hover {
+            background-color: #006699;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>LẤY KEY CỦA BẠN</h2>
+    <!-- Khung chứa Key -->
+    <div class="key-box" id="keyDisplay">Đang tạo...</div>
+    <!-- Nút sao chép -->
+    <button class="btn-copy" onclick="copyAndRedirect()">Sao chép Key</button>
+</div>
+
+<script>
+    // Hàm tạo key ngẫu nhiên 9 ký tự (Trùng khớp với bộ ký tự trong script Lua của bạn)
+    function generateKey(length) {
+        const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        let key = "";
+        for (let i = 0; i < length; i++) {
+            const rand = Math.floor(Math.random() * chars.length);
+            key += chars.charAt(rand);
+        }
+        return key;
+    }
+
+    // Tự động tạo key khi người dùng vừa truy cập trang web
+    const currentKey = generateKey(9);
+    document.getElementById("keyDisplay").innerText = currentKey;
+
+    // Hàm xử lý khi bấm nút "Sao chép Key"
+    function copyAndRedirect() {
+        // Thực hiện sao chép key vào bộ nhớ tạm (Clipboard)
+        navigator.clipboard.writeText(currentKey).then(() => {
+            /* 
+               Lưu ý về bảo mật của trình duyệt hiện đại: 
+               Hàm window.close() sẽ bị trình duyệt CHẶN nếu tab đó không phải do một script khác mở ra.
+               Vì vậy, giải pháp tối ưu và mượt mà nhất là CHUYỂN HƯỚNG THẲNG sang Telegram.
+               Khi trình duyệt chuyển hướng sang ứng dụng Telegram, tab này coi như đã hoàn thành nhiệm vụ.
+            */
+            window.location.href = "https://t.me/tamnguyenmod";
+        }).catch(err => {
+            // Trường hợp trình duyệt lỗi không cho copy tự động
+            alert("Có lỗi xảy ra, vui lòng tự bôi đen key để copy!");
+            window.location.href = "https://t.me/tamnguyenmod";
+        });
+    }
+</script>
+
+</body>
+</html>
